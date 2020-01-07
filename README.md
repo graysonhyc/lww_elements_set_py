@@ -20,7 +20,7 @@ To determine if an element exists in the LWW element set, the following rules ar
 - Does not exist if the element's most recent operation is a "remove"
 - If the timestamp of add and remove are the same, it is biased towards "add"
 
-This implementation provides the following APIs:
+This implementation provides the following APIs (check the code for more details):
 
 - add(element, timestamp) : Add an element with the timestamp to the add set
 - remove(element, timestamp) : Add an element with the timestamp to the remove set
