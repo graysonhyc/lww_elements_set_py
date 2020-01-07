@@ -91,7 +91,7 @@ class LWW_ElementSet():
         """
         target_set[element] = max(target_set[element], timestamp)
 
-    def exist(self, element):
+    def contains(self, element):
         """Determine if an element exists in the LWW element set.
 
         An element is a member of the LWW-Element-Set if it is in the add set, 
@@ -117,11 +117,11 @@ class LWW_ElementSet():
         else:
             return False
 
-    def get(self):
+    def get_all(self):
         """Return a list of all existing elements in the LWW element set
 
-        This method makes use of exist() and checks all elements in the add_set.
+        This method makes use of contains() and checks all elements in the add_set.
         Elements will be copied to the result list if they are not removed eventually.
         """
-        result = [x for x in self.add_set if self.exist(x)]
+        result = [x for x in self.add_set if self.contains(x)]
         return result

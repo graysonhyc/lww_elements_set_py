@@ -24,8 +24,8 @@ This implementation provides the following APIs (check the code for more details
 
 - add(element, timestamp) : Add an element with the timestamp to the add set
 - remove(element, timestamp) : Add an element with the timestamp to the remove set
-- exist(element) : Check if an element exists in the LWW element set using the rules above
-- get() : Return all existing elements in the LWW element set
+- contains(element) : Check if an element exists in the LWW element set using the rules above
+- get_all() : Return all existing elements in the LWW element set
 
 ### Testing
 
