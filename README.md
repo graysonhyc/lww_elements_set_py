@@ -18,6 +18,7 @@ To determine if an element exists in the LWW element set, the following rules ar
 - Does not exist if the element is present in the remove set but not in the add set (trivial)
 - Exists if the element's most recent operation is an "add"
 - Does not exist if the element's most recent operation is a "remove"
+- If the timestamp of add and remove are the same, it is biased towards "add"
 
 This implementation provides the following APIs:
 
@@ -43,7 +44,7 @@ The following tests attempt to repeat the "add" / "remove" operations with diffe
 
 #### Test for Commutativity
 It is required that the order of operations does not affect the final result.
-The following tests attempt to reverse the "add" and "remove" operations with different timestamps.
+The following tests attempt to reverse the order of "add" and "remove" operations with different timestamps.
 
 | Original state |  Operation  | Resulting state | Final result |
 |----------------|-------------|-----------------|--------------|
