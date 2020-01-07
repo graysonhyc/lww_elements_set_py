@@ -1,11 +1,10 @@
 GoodNotes Interview - SWE Challenge (By Grayson Ho)
 ===
-This is the deliverable for the first technical challenge for the position of Software Engineer,Machine Learning @ GoodNotes. A Last-Writer-Wins (LWW) Element set data structure, an operation-based Conflict-Free Replicated Data Type (CDRT) was implemented in Python. A test suite was also included to test various CDRT properties, i.e., communtativity,
+This is the deliverable for the first technical challenge for the position of Software Engineer, Machine Learning @ GoodNotes. A Last-Writer-Wins (LWW) Element set data structure, an operation-based Conflict-Free Replicated Data Type (CDRT) was implemented in Python. A test suite was also included to test various CDRT properties, i.e., communtativity,
 associativity and idempotence.
 
 ### Operations
-The conceptual idea as referenced from [this wiki page]
-(https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type#LWW-Element-Set_(Last-Write-Wins-Element-Set)).
+The conceptual idea is referenced from [this wiki page](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type#LWW-Element-Set_(Last-Write-Wins-Element-Set)).
 
 Operations on CRDTs need to adhere to the following rules:
 
@@ -27,6 +26,36 @@ This implementation provides the following APIs:
 
 ### Testing
 
+#### Test for Idempotence
+It is required that duplication or re-delivery of operations does not affect the final result.
+The following tests attempt to repeat the "add" / "remove" operations with different timestamps.
 
-### Resources
+| Original state | Operation   | Resulting state | Final result |
+|----------------|-------------|-----------------|--------------|
+| A(a,1) R()     | add(a,0)    | A(a,1) R()      | ['a']        |
+| A(a,1) R()     | add(a,1)    | A(a,1) R()      | ['a']        |
+| A(a,1) R()     | add(a,2)    | A(a,2) R()      | ['a']        |
+| A() R(a,1)     | remove(a,0) | A() R(a,1)      | [   ]        |
+| A() R(a,1)     | remove(a,1) | A() R(a,1)      | [   ]        |
+| A() R(a,1)     | remove(a,2) | A() R(a,2)      | [   ]        |
+
+#### Test for Commutativity
+It is required that the order of operations does not affect the final result.
+The following tests attempt to reverse the "add" and "remove" operations with different timestamps.
+
+| Original state | Operation   | Resulting state | Final result |
+|----------------|-------------|-----------------|--------------|
+| A(a,1) R()     | remove(a,1) | A(a,1) R(a,1)   | ['a']        |
+| A() R(a,1)     | add(a,1)    | A(a,1) R(a,1)   | ['a']        |
+| A(a,1) R()     | remove(a,0) | A(a,1) R(a,0)   | ['a']        |
+| A() R(a,0)     | add(a,1)    | A(a,1) R(a,0)   | ['a']        |
+| A(a,1) R()     | remove(a,2) | A(a,1) R(a,2)   | [   ]        |
+| A() R(a,2)     | add(a,1)    | A(a,1) R(a,2)   | [   ]        |
+
+#### Test for Associativity
+It is required that the grouping of operations does not affect the final result.
+
+
+### References
+
 
