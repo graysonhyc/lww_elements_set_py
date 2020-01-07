@@ -2,6 +2,12 @@ import unittest
 from lww_python import LWW_ElementSet
 
 class Test_LWW_ElementSet(unittest.TestCase):
+    """This test cases suite intends to test the LWW element set CDRT implementation for its various 
+    properties, including idempotence, commutativity and associativity.
+
+    Test cases for invalid inputs and multi-threaded operations are also included.
+    """
+
     # Test for Idempotent property
     def test1(self):
         lww = LWW_ElementSet()
