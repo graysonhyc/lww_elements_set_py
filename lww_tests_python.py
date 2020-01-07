@@ -8,25 +8,124 @@ class Test_LWW_ElementSet(unittest.TestCase):
     Test cases for invalid inputs and multi-threaded operations are also included.
     """
 
-    # Test for Idempotent property
+    # Test 1 - 6 test for idempotence property: (a + a = a)
     def test1(self):
-        lww = LWW_ElementSet()
-        lww.add(1,1)
-        lww.add(1,1)
-        self.assertTrue(lww.exist(1))
-        lww.add(1,0)
-        expected_res = [1]
-        self.assertEqual(lww.get(), expected_res)
+        lww_set = LWW_ElementSet()
+        lww_set.add('a', 1)
+        self.assertTrue(lww_set.exist('a'))
+        lww_set.add('a', 1)
+        self.assertTrue(lww_set.exist('a'))
+        self.assertEqual(lww_set.get(), ['a'])
 
-    # Test for Communtative property
     def test2(self):
-        pass
+        lww_set = LWW_ElementSet()
+        lww_set.add('a', 1)
+        self.assertTrue(lww_set.exist('a'))
+        lww_set.add('a', 0)
+        self.assertTrue(lww_set.exist('a'))
+        self.assertEqual(lww_set.get(), ['a'])
 
-    # Test for Associative property
     def test3(self):
-        pass
+        lww_set = LWW_ElementSet()
+        lww_set.add('a', 1)
+        self.assertTrue(lww_set.exist('a'))
+        lww_set.add('a', 2)
+        self.assertTrue(lww_set.exist('a'))
+        self.assertEqual(lww_set.get(), ['a'])
 
-    # Test for thread-safety
+    def test4(self):
+        lww_set = LWW_ElementSet()
+        lww_set.remove('a', 1)
+        self.assertFalse(lww_set.exist('a'))
+        lww_set.remove('a', 1)
+        self.assertFalse(lww_set.exist('a'))
+        self.assertEqual(lww_set.get(), [])
+
+    def test5(self):
+        lww_set = LWW_ElementSet()
+        lww_set.remove('a', 1)
+        self.assertFalse(lww_set.exist('a'))
+        lww_set.remove('a', 0)
+        self.assertFalse(lww_set.exist('a'))
+        self.assertEqual(lww_set.get(), [])
+
+    def test6(self):
+        lww_set = LWW_ElementSet()
+        lww_set.remove('a', 1)
+        self.assertFalse(lww_set.exist('a'))
+        lww_set.remove('a', 2)
+        self.assertFalse(lww_set.exist('a'))
+        self.assertEqual(lww_set.get(), [])
+
+    # Test 7 - 12 test for communtativity property: (a + b) = (b + a)
+    def test7(self):
+        lww_set = LWW_ElementSet()
+        lww_set.add('a', 1)
+        self.assertTrue(lww_set.exist('a'))
+        lww_set.remove('a', 1)
+        self.assertTrue(lww_set.exist('a'))
+        self.assertEqual(lww_set.get(), ['a'])
+
+    def test8(self):
+        lww_set = LWW_ElementSet()
+        lww_set.remove('a', 1)
+        self.assertFalse(lww_set.exist('a'))
+        lww_set.add('a', 1)
+        self.assertTrue(lww_set.exist('a'))
+        self.assertEqual(lww_set.get(), ['a'])
+        
+    def test9(self):
+        lww_set = LWW_ElementSet()
+        lww_set.add('a', 1)
+        self.assertTrue(lww_set.exist('a'))
+        lww_set.remove('a', 0)
+        self.assertTrue(lww_set.exist('a'))
+        self.assertEqual(lww_set.get(), ['a'])
+
+    def test10(self):
+        lww_set = LWW_ElementSet()
+        lww_set.remove('a', 0)
+        self.assertFalse(lww_set.exist('a'))
+        lww_set.add('a', 1)
+        self.assertTrue(lww_set.exist('a'))
+        self.assertEqual(lww_set.get(), ['a'])
+
+    def test11(self):
+        lww_set = LWW_ElementSet()
+        lww_set.add('a', 1)
+        self.assertTrue(lww_set.exist('a'))
+        lww_set.remove('a', 2)
+        self.assertFalse(lww_set.exist('a'))
+        self.assertEqual(lww_set.get(), [])
+
+    def test12(self):
+        lww_set = LWW_ElementSet()
+        lww_set.remove('a', 2)
+        self.assertFalse(lww_set.exist('a'))
+        lww_set.add('a', 1)
+        self.assertFalse(lww_set.exist('a'))
+        self.assertEqual(lww_set.get(), [])
+
+    # Test 13 - 14 test for associativity property: (a + b) + c = a + (b + c)
+    def test13(self):
+        lww_set = LWW_ElementSet()
+        lww_set.add('a', 1)
+        self.assertTrue(lww_set.exist('a'))
+        lww_set.add('b', 2)
+        self.assertTrue(lww_set.exist('b'))
+        lww_set.remove('b', 3)
+        self.assertFalse(lww_set.exist('b'))
+        self.assertEqual(lww_set.get(), ['a'])
+
+    def test14(self):
+        lww_set = LWW_ElementSet()
+        lww_set.add('b', 2)
+        self.assertTrue(lww_set.exist('b'))
+        lww_set.remove('b', 3)
+        self.assertFalse(lww_set.exist('b'))
+        lww_set.add('a', 1)
+        self.assertTrue(lww_set.exist('a'))
+        self.assertEqual(lww_set.get(), ['a'])
 
 if __name__ == "__main__":
     unittest.main()
