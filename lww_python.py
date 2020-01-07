@@ -15,10 +15,13 @@ class LWW_ElementSet():
         -Python dictionaries are used as the main data structure.
         -Insertion, Update and Searching can be done in O(1) time.
         -The data type of timestamp is a floating point number.
-        -Semaphores are added to ensure thread-safe operations.
+        -Semaphores are added to ensure thread-safe operations
         """
         self.add_set = defaultdict(float)
         self.remove_set = defaultdict(float)
+
+        # Just for demo: Python built-in dictionaries are inherently thread-safe
+        # https://stackoverflow.com/questions/6953351/thread-safety-in-pythons-dictionary
         self.add_sem = Semaphore()
         self.remove_sem = Semaphore()
 
@@ -120,8 +123,5 @@ class LWW_ElementSet():
         This method makes use of exist() and checks all elements in the add_set.
         Elements will be copied to the result list if they are not removed eventually.
         """
-        result = []
-        for element in self.add_set:
-            if self.exist(element):
-                result.append(element)
+        result = [x for x in self.add_set if self.exist(x)]
         return result

@@ -68,6 +68,9 @@ In fact, proving full commutativity is sufficient for proving associativity, sin
 in this context refers to re-ordering certain operations. The resulting state is just
 a collection of all element operations.
 
+### Future Development
+- Garbage collection : elements should be removed from the sets from time to time when they are no longer useful. In fact, only the most-recent operation (add/remove) is needed.
+
 ### References
 - https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type#LWW-Element-Set_(Last-Write-Wins-Element-Set)
 
