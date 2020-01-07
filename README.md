@@ -43,7 +43,7 @@ The following tests attempt to repeat the "add" / "remove" operations with diffe
 It is required that the order of operations does not affect the final result.
 The following tests attempt to reverse the "add" and "remove" operations with different timestamps.
 
-| Original state | Operation   | Resulting state | Final result |
+| Original state |  Operation  | Resulting state | Final result |
 |----------------|-------------|-----------------|--------------|
 | A(a,1) R()     | remove(a,1) | A(a,1) R(a,1)   | ['a']        |
 | A() R(a,1)     | add(a,1)    | A(a,1) R(a,1)   | ['a']        |
@@ -54,8 +54,21 @@ The following tests attempt to reverse the "add" and "remove" operations with di
 
 #### Test for Associativity
 It is required that the grouping of operations does not affect the final result.
+The following tests attempt to group several operations with different timestamps.
 
+| Original state  |  Operation  |   Resulting state  | Final result |
+|-----------------|-------------|--------------------|--------------|
+| A(a,1; b,2) R() | remove(b,3) | A(a,1; b,2) R(b,3) | ['a']        |
+| A(b,2) R(b,3)   | add(a,1)    | A(a,1; b,2) R(b,3) | ['a']        |
+
+In fact, proving full commutativity is sufficient for proving associativity, since grouping
+in this context refers to re-ordering certain operations. The resulting state is just
+a collection of all element operations.
 
 ### References
+- https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type#LWW-Element-Set_(Last-Write-Wins-Element-Set)
 
+- https://serverless.com/blog/crdt-explained-supercharge-serverless-at-edge/
+
+- https://kalele.io/summary-of-crdts/
 
