@@ -6,7 +6,7 @@ associativity and idempotence.
 ### Operations
 The conceptual idea is referenced from [this wiki page](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type#LWW-Element-Set_(Last-Write-Wins-Element-Set)).
 
-Operations on CRDTs need to adhere to the following rules:
+Operations on CRDTs need to adhere to the following [rules](http://book.mixu.net/distsys/eventual.html):
 
 - Associativity (a+(b+c)=(a+b)+c), so that grouping doesn't matter.
 - Commutativity (a+b=b+a), so that order of application doesn't matter.
@@ -14,6 +14,8 @@ Operations on CRDTs need to adhere to the following rules:
 
 To determine if an element exists in the LWW element set, the following rules are applied:
 
+- Exists if the element is present in the add set but not in the remove set (trivial)
+- Does not exist if the element is present in the remove set but not in the add set (trivial)
 - Exists if the element's most recent operation is an "add"
 - Does not exist if the element's most recent operation is a "remove"
 
@@ -71,4 +73,6 @@ a collection of all element operations.
 - https://serverless.com/blog/crdt-explained-supercharge-serverless-at-edge/
 
 - https://kalele.io/summary-of-crdts/
+
+- http://book.mixu.net/distsys/eventual.html
 
